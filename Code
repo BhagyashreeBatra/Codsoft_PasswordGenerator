@@ -1,0 +1,33 @@
+import random
+import string
+
+def generate_password(length, use_digits=True, use_special_chars=True):
+    characters = string.ascii_letters
+    if use_digits:
+        characters += string.digits
+    if use_special_chars:
+        characters += string.punctuation
+
+    password = ''.join(random.choice(characters) for _ in range(length))
+    return password
+
+while True:
+    try:
+        password_length = int(input("Enter the desired password length: "))
+        if password_length < 1:
+            print("Please enter a positive integer for password length.")
+            continue
+    except ValueError:
+        print("Please enter a valid positive integer for password length.")
+        continue
+
+    include_digits = input("Include digits (yes/no): ").strip().lower() == "yes"
+    include_special_chars = input("Include special characters (yes/no): ").strip().lower() == "yes"
+
+    password = generate_password(password_length, use_digits=include_digits, use_special_chars=include_special_chars)
+
+    print("Generated password:", password)
+
+    another_password = input("Generate another password? (yes/no): ").strip().lower()
+    if another_password != 'yes':
+        break
